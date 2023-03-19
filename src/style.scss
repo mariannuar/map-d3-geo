@@ -1,0 +1,157 @@
+// Color variables.
+$white: #ffff;
+$black: #000;
+$line-color: #b8acd1;
+$color-0: #ecdeff;
+$color-1: #dabfff;
+$color-2: #907ad6;
+$color-3: #4f518c;
+$color-4: #2c2a4a;
+
+.heading__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $black;
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid $line-color;
+}
+
+// Map.
+.map__state {
+  path {
+    fill: $color-0;
+    stroke: $white;
+    stroke-width: 1px;
+    transition: fill 0.5s ease-in-out;
+  }
+}
+
+.map__state:not(.map__state--color-0):hover {
+  path {
+    fill: $black;
+  }
+}
+
+.map__state--color-0 {
+  path {
+    fill: $color-0;
+  }
+}
+
+.map__state--color-1 {
+  path {
+    fill: $color-1;
+    cursor: pointer;
+  }
+}
+
+.map__state--color-2 {
+  path {
+    fill: $color-2;
+    cursor: pointer;
+  }
+}
+
+.map__state--color-3 {
+  path {
+    fill: $color-3;
+    cursor: pointer;
+  }
+}
+
+.map__state--color-4 {
+  path {
+    fill: $color-4;
+    cursor: pointer;
+  }
+}
+
+// Pop up
+.map__popup-wrapper {
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: none;
+  width: 100vw;
+  height: 100vh;
+
+  &[data-visible] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+  }
+}
+
+.map__popup-overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.map__popup {
+  position: relative;
+  max-width: 750px;
+  padding: 2rem;
+  background-color: $white;
+}
+
+.map__popup-heading {
+  display: inline-flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.map__popup-close {
+  background-color: $color-4;
+  padding: 1rem 1.5rem;
+  border: none;
+  color: $white;
+
+  &:hover,
+  &:focus {
+    background-color: $color-2;
+  }
+}
+
+.map__popup-title {
+  color: $color-4;
+}
+
+.state-concert__wrapper {
+  display: inline-flex;
+  padding: 1.5rem 0;
+  width: 100%;
+}
+
+.state-concert__wrapper:not(:last-child) {
+  border-bottom: 1px solid $color-4;
+}
+
+.state-concert__poster-wrapper {
+  max-width: 150px;
+  max-height: 150px;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.state-concert__info-wrapper {
+  margin-left: 2rem;
+}
+
+.state-concert__tour-dates {
+  margin: 0;
+}
+
+.state-concert__tour-year {
+  margin: 0.5rem 0;
+}

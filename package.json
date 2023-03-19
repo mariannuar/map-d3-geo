@@ -1,0 +1,36 @@
+{
+  "name": "map-d3-geo",
+  "version": "1.0.0",
+  "description": "Building a map component using the D3.js library",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "http-server -o /dist",
+    "build": "webpack --mode='development'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mariannuar/map-d3-geo.git"
+  },
+  "author": "Mariana Nunez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mariannuar/map-d3-geo/issues"
+  },
+  "homepage": "https://github.com/mariannuar/map-d3-geo#readme",
+  "dependencies": {
+    "d3-fetch": "^3.0.1",
+    "d3-geo": "^3.1.0",
+    "d3-selection": "^3.0.0",
+    "http-server": "^14.1.1",
+    "topojson-client": "^3.1.0"
+  },
+  "devDependencies": {
+    "css-loader": "^6.7.3",
+    "mini-css-extract-plugin": "^2.7.5",
+    "node-sass": "^8.0.0",
+    "sass-loader": "^13.2.1",
+    "webpack": "^5.76.2",
+    "webpack-cli": "^5.0.1"
+  }
+}
