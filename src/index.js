@@ -85,6 +85,15 @@ Promise.all([geojsonApiUrl, statesWithTaylorSwiftConcerts]).then(([usa]) => {
     }
   }
 
+  function showPopupHandler(id, name) {
+    const state = statesWithTaylorSwiftConcerts.filter(
+      (item) => item.state === getPostalCode(id)
+    );
+    if (state.length) {
+      showPopup(getPostalCode(id), name);
+    }
+  }
+
   function mouseEnterHandler(_, d) {
     stateLabel.innerHTML = `State: ${d.properties.name}`;
   }
@@ -117,8 +126,5 @@ Promise.all([geojsonApiUrl, statesWithTaylorSwiftConcerts]).then(([usa]) => {
     .attr("d", path)
     .on("mouseenter", mouseEnterHandler)
     .on("mouseleave", mouseLeaveHandler)
-    .on("click", (_, d) => {
-      if (hasTaylorSwiftConcerts(d.id))
-        showPopup(getPostalCode(d.id), d.properties.name);
-    });
+    .on("click", (_, d) => { showPopupHandler(d.id, d.properties.name)});
 });
