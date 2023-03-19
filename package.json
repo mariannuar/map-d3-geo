@@ -26,10 +26,6 @@
     "topojson-client": "^3.1.0"
   },
   "devDependencies": {
-    "css-loader": "^6.7.3",
-    "mini-css-extract-plugin": "^2.7.5",
-    "node-sass": "^8.0.0",
-    "sass-loader": "^13.2.1",
     "webpack": "^5.76.2",
     "webpack-cli": "^5.0.1"
   }

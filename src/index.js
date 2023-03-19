@@ -4,7 +4,6 @@ import { geoAlbersUsa, geoPath } from "d3-geo";
 import { feature } from "topojson-client";
 import postalCodes from "../static/state-codes.json";
 import statesWithTaylorSwiftConcerts from "../static/states-with-taylor-swift-concerts.json";
-import "./style.scss";
 
 const geojsonApiUrl = json(`../static/states-10m.json`);
 const stateConcertsDataApiUrl = `../static/concert-data.json`;
@@ -13,9 +12,9 @@ const stateLabel = document.querySelector("#state-label");
 
 const getPostalCode = (id) => postalCodes.find((state) => state.val === id)?.id;
 
-const popupWrapper = document.querySelector('#map-popup-wrapper');
-const popup = popupWrapper.querySelector('.map__popup');
-const popupContent = popupWrapper.querySelector('.map__popup-content');
+const popupWrapper = document.querySelector("#map-popup-wrapper");
+const popup = popupWrapper.querySelector(".map__popup");
+const popupContent = popupWrapper.querySelector(".map__popup-content");
 
 function closePopup() {
   delete popupWrapper.dataset.visible;
@@ -37,17 +36,14 @@ function showPopup(stateCode, stateName) {
               <p class="state-concert__tour-year">Year: ${concert.tour_year}</p>
             </div>
           </div>
-        `,
+        `
       )
-      .join('\n');
+      .join("\n");
 
-    popup.setAttribute(
-      'aria-labelledby',
-      'map-popup-title',
-    );
+    popup.setAttribute("aria-labelledby", "map-popup-title");
 
     popupContent.insertAdjacentHTML(
-      'afterbegin',
+      "afterbegin",
       `
         <div class="map__popup-heading">
           <h2
@@ -59,20 +55,20 @@ function showPopup(stateCode, stateName) {
           <button class="map__popup-close">X</button>
         </div>
         ${dataRendered}
-      `,
+      `
     );
 
     popupWrapper.dataset.visible = true;
     popupContent
-      .querySelector('.map__popup-close')
-      .addEventListener('click', closePopup);
+      .querySelector(".map__popup-close")
+      .addEventListener("click", closePopup);
 
     popup.focus();
   });
 }
 
-popupWrapper.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape') {
+popupWrapper.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
     closePopup();
   }
 });
@@ -94,7 +90,7 @@ Promise.all([geojsonApiUrl, statesWithTaylorSwiftConcerts]).then(([usa]) => {
   }
 
   function mouseLeaveHandler() {
-    stateLabel.innerHTML = '';
+    stateLabel.innerHTML = "";
   }
 
   const projection = geoAlbersUsa();
@@ -121,7 +117,7 @@ Promise.all([geojsonApiUrl, statesWithTaylorSwiftConcerts]).then(([usa]) => {
     .attr("d", path)
     .on("mouseenter", mouseEnterHandler)
     .on("mouseleave", mouseLeaveHandler)
-    .on('click', (_, d) => {
+    .on("click", (_, d) => {
       if (hasTaylorSwiftConcerts(d.id))
         showPopup(getPostalCode(d.id), d.properties.name);
     });
