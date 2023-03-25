@@ -26,7 +26,7 @@ This will open you a window in your browser, that will display the following map
 
 ## Using and explaning the project and how to use the d3 module to build maps.
 
-### D3-geo
+### D3 geo
 As it was mentioned before, we are using the d3-geo module. To use it in any project, you just have to install it.
 
 If you are using npm, run `npm install d3-geo`, or if you are using yarn, run `yarn add d3-geo`.
@@ -63,7 +63,7 @@ const projection = geoAlbersUsa();
 const path = geoPath().projection(projection);
 ```
 
-### D3-fetch
+### D3 fetch
 Now, we will need another module from `D3 js` besides the `d3-geo`, and that's [d3-fetch](https://github.com/d3/d3-fetch). This module allows us to fetch data from any kind of file. This module has built-in support for parsing JSON, CSV, and TSV.
 
 To install it, if you are using npm you have to run `npm install d3-fetch`, and if you are using yarn, `yarn add d3-fetch`.
@@ -76,14 +76,54 @@ const geojsonApiUrl = json(`../static/states-10m.json`);
 
 The `states-10m.json` is a TopoJSON file that includes the coordinates of our States Map. This file is important because it will tell to d3 all the data needed to build the map. [TopoJSON](https://github.com/topojson/topojson) is an extension of GeoJSON that encodes topology. Rather than representing geometries discretely, geometries in TopoJSON files are stitched together from shared line segments called arcs. The use of this in this example will be explain a little bit more below.
 
-### D3-Selection
+### D3 Selection
 This is another module from `D3 js` that we will need, and that is [d3-selection](https://github.com/d3/d3-selection). This module allows us to set attributes, styles, properties, HTML or text content, and more. Using the data join’s enter and exit selections, you can also add or remove elements to correspond to data.
 
 To install it, if you are using npm you have to run `npm install d3-selection`, and if you are using yarn, `yarn add d3-selection`.
 
-
-Then, you will have to import it in your js file:
+Then, you will have to import it in your js file, in the following way:
 
 ```
 import { selection } from d3-selection;
+```
+
+In our example, the selection method will return the selection of the element with the id `map-wrapper`, so this allows us to append an `svg` element with a `viewBox` attribute, where the map will be printed.
+
+```
+const svg = select("#map-wrapper")
+  .append("svg")
+  .attr("viewBox", `0 0 ${width} ${height}`);
+```
+
+### Topojson Client
+This is the last module that we will need, the [topojson-client](https://github.com/topojson/topojson-client). It allows us to manipulates our TopoJSON file through the tools it provides.
+
+To install it, if you are using npm you have to run `npm install topojson-client`, and if you are using yarn, `yarn add topojson-client`.
+
+Then, you will have to import it in your js file, in the following way:
+
+```
+import { feature } from "topojson-client";
+```
+
+For this example, we show the data for the number of Taylor Swift concerts in each state over the last 13 years. However, there are some states that has never had a concert of Taylor Swift, so we will need a json file with the postal codes of the states that have ever had at least one concert of her, and that would be the `states-with-taylor-swift-concerts.json`, with this we can add color to each state to difference the number of concerts according to the color. 
+
+Also, we will need a json file of the postal codes `state-codes.json` because our TopoJSON file, returns an id of each state, and our `states-with-taylor-swift-concerts.json` includes the postal code of the state, so to match both in the map, we need that file that has the `postal code` and the value of the `id` that is coming from the TopoJSON file.
+
+Now, to explain the use of everything together so we build and print our map, we will just need this piece of code:
+
+```
+svg
+  .selectAll(".map__state")
+  .data(feature(usa, usa.objects.states).features)
+  .enter()
+  .filter((d) => postalCodes.find((state) => state.val === d.id))
+  .append("g")
+  .attr("class", (d) => hasTaylorSwiftConcerts(d.id))
+  .attr("id", (d) => `state-${d.id}`)
+  .insert("path")
+  .attr("d", path)
+  .on("mouseenter", mouseEnterHandler)
+  .on("mouseleave", mouseLeaveHandler)
+  .on("click", (_, d) => { showPopupHandler(d.id, d.properties.name)});
 ```
