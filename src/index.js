@@ -73,7 +73,7 @@ popupWrapper.addEventListener("keydown", (event) => {
   }
 });
 
-Promise.all([geojsonApiUrl, statesWithTaylorSwiftConcerts]).then(([usa]) => {
+Promise.all([geojsonApiUrl, statesWithTaylorSwiftConcerts]).then(([geojson]) => {
   function hasTaylorSwiftConcerts(id) {
     const state = statesWithTaylorSwiftConcerts.filter(
       (item) => item.state === getPostalCode(id)
@@ -116,7 +116,7 @@ Promise.all([geojsonApiUrl, statesWithTaylorSwiftConcerts]).then(([usa]) => {
 
   svg
     .selectAll(".map__state")
-    .data(feature(usa, usa.objects.states).features)
+    .data(feature(geojson, geojson.objects.states).features)
     .enter()
     .filter((d) => postalCodes.find((state) => state.val === d.id))
     .append("g")
