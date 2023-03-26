@@ -138,6 +138,7 @@ There are more functions, modules and properties you can use when building a map
 ## Resources
 - [Data-Driven Documents](https://d3js.org/)
 - [D3](https://github.com/d3)
+- [D3 in Depth](https://www.d3indepth.com/datajoins/)
 - [D3 Geo](https://github.com/d3/d3-geo)
 - [TopoJSON Client](https://github.com/topojson/topojson-client)
 - [D3 Selection](https://github.com/d3/d3-selection)
