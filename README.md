@@ -115,15 +115,30 @@ Now, to explain the use of everything together so we build and print our map, we
 ```
 svg
   .selectAll(".map__state")
-  .data(feature(usa, usa.objects.states).features)
+  .data(feature(geojson, geojson.objects.states).features)
   .enter()
   .filter((d) => postalCodes.find((state) => state.val === d.id))
   .append("g")
   .attr("class", (d) => hasTaylorSwiftConcerts(d.id))
   .attr("id", (d) => `state-${d.id}`)
   .insert("path")
-  .attr("d", path)
-  .on("mouseenter", mouseEnterHandler)
-  .on("mouseleave", mouseLeaveHandler)
-  .on("click", (_, d) => { showPopupHandler(d.id, d.properties.name)});
+  .attr("d", path);
 ```
+
+Remember the `svg` we created before? To that `svg` we will set the data from the TopoJSON file, classes, id, insert elements, and other things to all `map__state` elements in the current document.
+
+First, we will use the property `data` from d3, which defines the array that's being `enter` to the svg. In this data we are returning the GeoJS0N Feature or FeatureCollection for the specified object in the given topology by using the tool `feature` from `topojson-client`. If the specified object is a string, it is treated as topology.objects[object]. Then, if the object is a GeometryCollection, a FeatureCollection is returned, and each geometry in the collection is mapped to a Feature. Otherwise, a Feature is returned. So for this example we are returning. So in our case, it will return the `geojson.objects.states` from our TopoJSON file, which means identifiers, bounding boxes, properties and coordinates of each state.
+
+Second, we use the `filter` attribute to match each feature `id` with the `postal code` value of our `state-codes.json` file. Then we append a `g` to svg for each feature, which will have a `class` attribute for adding a color class to add styles, so each state is differentiated by this class, and a `id` attribute, all of this by using the property `attr`. 
+
+Finaly, through the `insert` attribute, we insert a `path` to each `g` and this one will have the `d` attribute that defines the path to be drawn, in this case will be the projection we explained before, taking in count the coordinates, identifiers, bounding boxes, properties and coordinates of each state to match everything and print the map.
+
+There are more functions, modules and properties you can use when building a map with D3. Below there is a link of resources.
+
+## Resources
+- [Data-Driven Documents](https://d3js.org/)
+- [D3](https://github.com/d3)
+- [D3 Geo](https://github.com/d3/d3-geo)
+- [TopoJSON Client](https://github.com/topojson/topojson-client)
+- [D3 Selection](https://github.com/d3/d3-selection)
+- [D3 Fetch](https://github.com/d3/d3-fetch)
